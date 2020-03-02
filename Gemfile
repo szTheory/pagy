@@ -15,6 +15,9 @@ group :test do
   gem 'codecov', require:  false
   gem 'minitest'
   gem 'minitest-reporters'
+  gem 'capybara'
+  gem 'selenium-webdriver'
+  gem 'capybara-screenshot'
 end
 
 # docs server

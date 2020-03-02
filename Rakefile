@@ -21,7 +21,8 @@ Rake::TestTask.new(:test_main) do |t|
                                       'test/**/searchkick_test.rb',
                                       'test/**/support_test.rb',
                                       'test/**/shared_test.rb',
-                                      'test/**/shared_combo_test.rb')
+                                      'test/**/shared_combo_test.rb',
+                                      'test/acceptance/*_test.rb')
 end
 
 Rake::TestTask.new(:test_extra_headers) do |t|
@@ -69,6 +70,11 @@ Rake::TestTask.new(:test_shared_combo) do |t|
   t.test_files = FileList['test/**/shared_combo_test.rb']
 end
 
+Rake::TestTask.new(:test_acceptance) do |t|
+  t.libs += %w[test lib]
+  t.test_files = FileList['test/acceptance/*_test.rb']
+end
+
 
 task :test => [ :test_main,
                 :test_extra_items,
@@ -79,7 +85,8 @@ task :test => [ :test_main,
                 :test_extra_elasticsearch,
                 :test_support,
                 :test_shared,
-                :test_shared_combo ]
+                :test_shared_combo,
+                :test_acceptance]
 
 if ENV['RUN_RUBOCOP']
   require "rubocop/rake_task"
