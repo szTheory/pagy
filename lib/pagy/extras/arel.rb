@@ -3,11 +3,12 @@
 # frozen_string_literal: true
 
 class Pagy
-  module Backend ; private
+  module Backend
+    private
 
     def pagy_arel(collection, vars={})
       pagy = Pagy.new(pagy_arel_get_vars(collection, vars))
-      return pagy, pagy_get_items(collection, pagy)
+      [ pagy, pagy_get_items(collection, pagy) ]
     end
 
     def pagy_arel_get_vars(collection, vars)

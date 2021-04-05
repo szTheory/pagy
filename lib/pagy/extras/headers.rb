@@ -4,7 +4,8 @@
 
 class Pagy
   # Add specialized backend methods to add pagination response headers
-  module Backend ; private
+  module Backend
+    private
 
     VARS[:headers] = { page: 'Current-Page', items: 'Page-Items', count: 'Total-Count', pages: 'Total-Pages' }
 
@@ -22,9 +23,11 @@ class Pagy
 
     def pagy_headers_hash(pagy)
       countless = defined?(Pagy::Countless) && pagy.is_a?(Pagy::Countless)
-      rels      = { 'first' => 1, 'prev' => pagy.prev, 'next' => pagy.next }; rels['last'] = pagy.last unless countless
+      rels = { 'first' => 1, 'prev' => pagy.prev, 'next' => pagy.next }
+      rels['last'] = pagy.last unless countless
+
       url_str   = pagy_url_for(PAGE_PLACEHOLDER, pagy, :url)
-      hash      = { 'Link' => Hash[rels.map{|rel, n|[rel, url_str.sub(PAGE_PLACEHOLDER, n.to_s)] if n}.compact] }
+      hash      = { 'Link' => rels.map{|rel, n|[rel, url_str.sub(PAGE_PLACEHOLDER, n.to_s)] if n}.compact.to_h }
       headers   = pagy.vars[:headers]
       hash[headers[:page]]  = pagy.page.to_s         if headers[:page]
       hash[headers[:items]] = pagy.vars[:items].to_s if headers[:items]

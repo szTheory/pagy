@@ -8,7 +8,11 @@ class Pagy
 
     ::I18n.load_path += Dir[Pagy.root.join('locales', '*.yml')]
 
-    Pagy::I18n.clear.instance_eval { undef :load; undef :t } # unload the pagy default constant for efficiency
+    # unload the pagy default constant for efficiency
+    Pagy::I18n.clear.instance_eval do
+      undef :load
+      undef :t
+    end
 
     module I18n
       def pagy_t(key, **opts) = ::I18n.t(key, **opts)

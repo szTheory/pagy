@@ -28,7 +28,8 @@ class Pagy
   end
 
   # Add specialized backend methods to paginate ElasticsearchRails searches
-  module Backend ; private
+  module Backend
+    private
 
     # Return Pagy object and items
     def pagy_elasticsearch_rails(pagy_search_args, vars={})
@@ -39,12 +40,13 @@ class Pagy
       response       = model.search(query_or_payload, **options)
       total          = response.respond_to?(:raw_response) ? response.raw_response['hits']['total'] : response.response['hits']['total']
       vars[:count]   = total.is_a?(Hash) ? total['value'] : total
+
       pagy = Pagy.new(vars)
       # with :last_page overflow we need to re-run the method in order to get the hits
-      if defined?(Pagy::Overflow) && pagy.overflow? && pagy.vars[:overflow] == :last_page
-        return pagy_elasticsearch_rails(pagy_search_args, vars.merge(page: pagy.page))
-      end
-      return pagy, called.empty? ? response : response.send(*called)
+      return pagy_elasticsearch_rails(pagy_search_args, vars.merge(page: pagy.page)) \
+        if defined?(Pagy::Overflow) && pagy.overflow? && pagy.vars[:overflow] == :last_page
+
+      [ pagy, called.empty? ? response : response.send(*called) ]
     end
 
     # Sub-method called only by #pagy_elasticsearch_rails: here for easy customization of variables by overriding
