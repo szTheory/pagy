@@ -1,5 +1,5 @@
 # See Pagy::Backend API documentation: https://ddnexus.github.io/pagy/api/backend
-# encoding: utf-8
+
 # frozen_string_literal: true
 
 class Pagy

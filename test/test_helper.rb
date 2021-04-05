@@ -1,4 +1,4 @@
-# encoding: utf-8
+
 # frozen_string_literal: true
 
 $VERBOSE = {'false' => false, 'true' => true}[ENV['VERBOSE']] if ENV['VERBOSE']

@@ -13,8 +13,14 @@ Layout:
 Metrics:
   Enabled: false
 
-Style:
+
+Style/CommentedKeyword:
   Enabled: false
+Style/EmptyCaseCondition:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
+
 
 Bundler/OrderedGems:
   Enabled: false
