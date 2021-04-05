@@ -8,12 +8,14 @@ class Pagy
 
   # See also the extras if you need specialized methods to paginate Arrays or other collections
 
-  module Backend ; private         # the whole module is private so no problem with including it in a controller
+
+  module Backend
+    private         # the whole module is private so no problem with including it in a controller
 
     # Return Pagy object and items
     def pagy(collection, vars={})
       pagy = Pagy.new(pagy_get_vars(collection, vars))
-      return pagy, pagy_get_items(collection, pagy)
+      [ pagy, pagy_get_items(collection, pagy) ]
     end
 
     # Sub-method called only by #pagy: here for easy customization of variables by overriding
